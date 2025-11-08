@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,36 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('*', function ($view) {
+            $menuItems = [
+                [
+                    'label' => 'Dashboard',
+                    'icon' => 'bi bi-house',
+                    'route' => 'dashboard',
+                ],
+                [
+                    'label' => 'Aset',
+                    'icon' => 'bi bi-box',
+                    'route' => 'aset.index',
+                ],
+                [
+                    'label' => 'Peminjaman',
+                    'icon' => 'bi bi-archive',
+                    'route' => 'peminjamans.index',
+                ],
+                [
+                    'label' => 'Peminjam',
+                    'icon' => 'bi bi-people',
+                    'route' => 'users.index',
+                ],
+                [
+                    'label' => 'Reports',
+                    'icon' => 'bi bi-graph-up',
+                    'route' => 'reports.index',
+                ],
+            ];
+
+            $view->with('menuItems', $menuItems);
+        });
     }
 }
