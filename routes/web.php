@@ -3,6 +3,7 @@
 use App\Http\Controllers\AsetController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -12,6 +13,7 @@ Route::get('/', function () {
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/aset/{id_aset}', [AsetController::class, 'show'])->name('aset.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -19,7 +21,8 @@ Route::middleware('auth')->group(function () {
     //ASET
     Route::get('/aset', [AsetController::class, 'index'])->name('aset.index');
     Route::post('/aset', [AsetController::class, 'store'])->name('aset.store');
-    Route::put('/aset/{id_aset}', [AsetController::class, 'edit'])->name('aset.edit');
+    Route::get('/aset/{id_aset}/edit', [AsetController::class, 'edit'])->name('aset.edit');
+    Route::put('/aset/{id_aset}', [AsetController::class, 'update'])->name('aset.update');
     Route::delete('/aset/{id_aset}', [AsetController::class, 'destroy'])->name('aset.destroy');
     
 

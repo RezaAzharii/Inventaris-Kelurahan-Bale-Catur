@@ -99,6 +99,10 @@
             color: #ffffff !important;
             border-radius: 5px;
         }
+
+        .notransition {
+            transition: none !important;
+        }
     </style>
 </head>
 
@@ -106,7 +110,7 @@
 
     @include('partials.sidebar')
 
-    <div class="transition-all duration-300" :class="sidebarOpen ? 'ml-64' : 'ml-0'">
+    <div class="notransition transition-all duration-300" :class="sidebarOpen ? 'ml-64' : 'ml-0'">
 
         @include('partials.navbar')
 

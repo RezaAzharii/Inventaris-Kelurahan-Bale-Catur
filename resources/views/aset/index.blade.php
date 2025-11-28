@@ -85,7 +85,8 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @forelse ($asets as $index => $aset)
-                            <tr class="hover:bg-blue-50 transition-colors">
+                            <tr class="hover:bg-blue-50 transition-colors"
+                                onclick="window.location='{{ route('aset.show', $aset->id_aset) }}'">
                                 <td class="px-6 py-3">{{ $index + 1 }}</td>
                                 <td class="px-6 py-3 font-medium text-gray-800">{{ $aset->jenis_barang }}</td>
                                 <td class="px-6 py-3 text-gray-600">{{ $aset->kode_barang }}</td>
@@ -117,21 +118,22 @@
                                     <div class="flex flex-col items-center gap-3">
 
                                         <a href="{{ route('aset.edit', $aset->id_aset) }}"
-                                            class="text-blue-600 hover:underline"></a><svg
-                                            xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="lucide lucide-square-pen-icon lucide-square-pen">
-                                            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                                            <path
-                                                d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
-                                        </svg>
+                                            onclick="event.stopPropagation()" class="text-blue-600 hover:underline">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round"
+                                                class="lucide lucide-square-pen-icon lucide-square-pen">
+                                                <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                                                <path
+                                                    d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z" />
+                                            </svg>
+                                        </a>
 
                                         <x-alert-dialog :action="route('aset.destroy', $aset->id_aset)" title="Hapus Data Aset?"
                                             message="Aset ini akan dihapus secara permanen dan tidak dapat dikembalikan. Lanjutkan?"
                                             confirmText="Hapus" cancelText="Batal">
                                             <x-slot:trigger>
-                                                <button class="text-red-600 hover:underline">
+                                                <button onclick="event.stopPropagation()" class="text-red-600 hover:underline">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
