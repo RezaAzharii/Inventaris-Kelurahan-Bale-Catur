@@ -28,15 +28,32 @@ Route::middleware('auth')->group(function () {
     Route::delete('/aset/{id_aset}', [AsetController::class, 'destroy'])->name('aset.destroy');
     
    // PEMINJAMAN
-    Route::get('/peminjamans', [PeminjamanController::class, 'index'])->name('peminjaman.index');
-    Route::get('/peminjaman/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
-    Route::post('/peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
+   // List peminjaman
+    Route::get('/peminjaman', [PeminjamanController::class, 'index'])
+        ->name('peminjaman.index');
 
-    Route::get('/peminjaman/{id}/edit', [PeminjamanController::class, 'edit'])->name('peminjaman.edit');   // BENAR
-    Route::put('/peminjaman/{id}', [PeminjamanController::class, 'update'])->name('peminjaman.update');   // UPDATE
+    // Simpan peminjaman baru
+    Route::post('/peminjaman', [PeminjamanController::class, 'store'])
+        ->name('peminjaman.store');
 
-    Route::delete('/peminjaman/{id}', [PeminjamanController::class, 'destroy'])->name('peminjaman.destroy');
+    // Detail peminjaman
+    Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show'])
+        ->name('peminjaman.show');
 
+    // Edit Peminjaman
+    Route::get('/peminjaman/{id}/edit', [PeminjamanController::class, 'edit'])
+        ->name('peminjaman.edit');
+
+    // Update Peminjaman
+    Route::put('/peminjaman/{id}', [PeminjamanController::class, 'update'])
+        ->name('peminjaman.update');
+
+    // Hapus Peminjaman
+    Route::delete('/peminjaman/{id}', [PeminjamanController::class, 'destroy'])
+        ->name('peminjaman.destroy');
+
+
+    
     // Peminjam
     // PEMINJAM - TAMPILKAN LIST
     Route::get('/peminjam', [PeminjamController::class, 'index'])
@@ -68,9 +85,9 @@ Route::middleware('auth')->group(function () {
     // Route::get('/users', function () {
     //     return 'Users list';
     // })->name('users.index');
-    //Route::get('/peminjaman', function () {
+    // Route::get('/peminjaman', function () {
     //    return view('peminjaman.index');
-    //})->name('peminjaman.index');
+    // })->name('peminjaman.index');
     Route::get('/users/create', function () {
          return 'Add user form';
     })->name('users.create');

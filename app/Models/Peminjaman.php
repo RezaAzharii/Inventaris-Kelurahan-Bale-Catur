@@ -11,7 +11,7 @@ class Peminjaman extends Model
     use HasFactory;
 
     protected $table = 'peminjamans';
-    protected $primaryKey = 'id_peminjamans';
+    protected $primaryKey = 'id_peminjaman';
     protected $fillable = [
         'id_peminjam',
         'id_aset',

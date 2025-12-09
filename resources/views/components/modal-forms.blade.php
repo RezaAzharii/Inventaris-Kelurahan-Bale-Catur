@@ -6,6 +6,7 @@
     'buttonText' => 'Simpan',
     'fieldsView',
     'data' => null,
+    'fieldsData' => [],
 ])
 
 <div id="{{ $id }}" tabindex="-1" aria-hidden="true" onclick="handleBackdropClick(event, '{{ $id }}')"
@@ -24,7 +25,7 @@
                 @method('PUT')
             @endif
 
-            @include($fieldsView, ['item' => $data])
+            @include($fieldsView, array_merge($fieldsData, ['item' => $data]))
 
             <div class="flex justify-end">
                 <button type="submit"

@@ -35,12 +35,12 @@ class AppServiceProvider extends ServiceProvider
                 [
                     'label' => 'Peminjaman',
                     'icon' => 'bi bi-archive',
-                    'route' => 'peminjamans.index',
+                    'route' => 'peminjaman.index',
                 ],
                 [
                     'label' => 'Peminjam',
                     'icon' => 'bi bi-people',
-                    'route' => 'users.index',
+                    'route' => 'peminjam.index',
                 ],
                 [
                     'label' => 'Reports',
