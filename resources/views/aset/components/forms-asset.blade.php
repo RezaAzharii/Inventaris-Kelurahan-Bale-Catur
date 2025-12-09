@@ -1,0 +1,119 @@
+@php
+    if (!isset($aset)) {
+        $aset = null;
+    }
+
+    $is_create = is_null($aset) || !isset($aset->id_aset);
+
+    $aset =
+        $aset ??
+        (object) [
+            'jenis_barang' => '',
+            'kode_barang' => '',
+            'identitas_barang' => '',
+            'pengguna_barang' => '',
+            'tahun_perolehan' => '',
+            'nilai_perolehan' => '',
+            'nilai_saat_ini' => '',
+            'keterangan' => '',
+        ];
+
+    $getAsetValue = function ($fieldName, $asetValue, $isCreate, $currentAset) {
+        
+        $oldId = session()->get('id_aset');
+        $oldAction = session()->get('action');
+
+        if ($isCreate && $oldAction === 'create' && old($fieldName) !== null) {
+            return old($fieldName);
+        }
+
+        if (!$isCreate && isset($currentAset->id_aset) && $oldId == $currentAset->id_aset && old($fieldName) !== null) {
+            return old($fieldName);
+        }
+
+        return $asetValue;
+    };
+@endphp
+
+<div class="space-y-4">
+    <div>
+        <label for="jenis_barang" class="block text-sm font-medium text-gray-700">Jenis Barang</label>
+        <input type="text" name="jenis_barang" id="jenis_barang" required
+            value="{{ $getAsetValue('jenis_barang', $aset->jenis_barang, $is_create, $aset) }}"
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900 @error('jenis_barang') border-red-500 @enderror">
+        @error('jenis_barang')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
+    </div>
+    
+    <div>
+        <label for="kode_barang" class="block text-sm font-medium text-gray-700">Kode Barang</label>
+        <input type="text" name="kode_barang" id="kode_barang" required
+            value="{{ $getAsetValue('kode_barang', $aset->kode_barang, $is_create, $aset) }}"
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900 @error('kode_barang') border-red-500 @enderror">
+        @error('kode_barang')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="identitas_barang" class="block text-sm font-medium text-gray-700">Identitas</label>
+        <input type="text" name="identitas_barang" id="identitas_barang"
+            value="{{ $getAsetValue('identitas_barang', $aset->identitas_barang, $is_create, $aset) }}"
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900 @error('identitas_barang') border-red-500 @enderror">
+        @error('identitas_barang')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="pengguna_barang" class="block text-sm font-medium text-gray-700">Pengguna</label>
+        <input type="text" name="pengguna_barang" id="pengguna_barang"
+            value="{{ $getAsetValue('pengguna_barang', $aset->pengguna_barang, $is_create, $aset) }}"
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900 @error('pengguna_barang') border-red-500 @enderror">
+        @error('pengguna_barang')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="tahun_perolehan" class="block text-sm font-medium text-gray-700">Tahun Perolehan</label>
+        <input type="date" name="tahun_perolehan" id="tahun_perolehan"
+            value="{{ $getAsetValue('tahun_perolehan', $aset->tahun_perolehan, $is_create, $aset) }}"
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900 @error('tahun_perolehan') border-red-500 @enderror">
+        @error('tahun_perolehan')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="nilai_perolehan" class="block text-sm font-medium text-gray-700">Nilai Perolehan</label>
+        <input type="number" name="nilai_perolehan" id="nilai_perolehan"
+            value="{{ $getAsetValue('nilai_perolehan', $aset->nilai_perolehan, $is_create, $aset) }}"
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900 @error('nilai_perolehan') border-red-500 @enderror">
+        @error('nilai_perolehan')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="nilai_saat_ini" class="block text-sm font-medium text-gray-700">Nilai Saat ini</label>
+        <input type="number" name="nilai_saat_ini" id="nilai_saat_ini"
+            value="{{ $getAsetValue('nilai_saat_ini', $aset->nilai_saat_ini, $is_create, $aset) }}"
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900 @error('nilai_saat_ini') border-red-500 @enderror">
+        @error('nilai_saat_ini')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
+    </div>
+
+    <div>
+        <label for="keterangan" class="block text-sm font-medium text-gray-700">Keterangan</label>
+        <input name="keterangan" id="keterangan" 
+            value="{{ $getAsetValue('keterangan', $aset->keterangan, $is_create, $aset) }}"
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900 @error('keterangan') border-red-500 @enderror">
+        @error('keterangan')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
+    </div>
+
+</div>

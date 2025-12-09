@@ -20,6 +20,7 @@ class Aset extends Model
         'nilai_perolehan',
         'nilai_saat_ini',
         'keterangan',
+        'jumlah',
         'qr_code'
     ];
 

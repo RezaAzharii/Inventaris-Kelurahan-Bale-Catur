@@ -40,6 +40,7 @@ class AsetController extends Controller
             'tahun_perolehan',
             'nilai_perolehan',
             'nilai_saat_ini',
+            'jumlah',
             'keterangan',
         ]));
         return redirect()->route('aset.index')->with('success', 'Data aset berhasil ditambahkan.');

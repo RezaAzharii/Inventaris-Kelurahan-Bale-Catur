@@ -19,6 +19,9 @@ Route::get('/aset/{id_aset}', [AsetController::class, 'show'])->name('aset.show'
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    //Profile User
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     
     //ASET
     Route::get('/aset', [AsetController::class, 'index'])->name('aset.index');
@@ -26,71 +29,37 @@ Route::middleware('auth')->group(function () {
     Route::get('/aset/{id_aset}/edit', [AsetController::class, 'edit'])->name('aset.edit');
     Route::put('/aset/{id_aset}', [AsetController::class, 'update'])->name('aset.update');
     Route::delete('/aset/{id_aset}', [AsetController::class, 'destroy'])->name('aset.destroy');
-    
-   // PEMINJAMAN
-   // List peminjaman
+
+    // Peminjaman
     Route::get('/peminjaman', [PeminjamanController::class, 'index'])
         ->name('peminjaman.index');
-
-    // Simpan peminjaman baru
     Route::post('/peminjaman', [PeminjamanController::class, 'store'])
         ->name('peminjaman.store');
-
-    // Detail peminjaman
     Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show'])
         ->name('peminjaman.show');
-
-    // Edit Peminjaman
     Route::get('/peminjaman/{id}/edit', [PeminjamanController::class, 'edit'])
         ->name('peminjaman.edit');
-
-    // Update Peminjaman
     Route::put('/peminjaman/{id}', [PeminjamanController::class, 'update'])
         ->name('peminjaman.update');
-
-    // Hapus Peminjaman
     Route::delete('/peminjaman/{id}', [PeminjamanController::class, 'destroy'])
         ->name('peminjaman.destroy');
-
-
     
     // Peminjam
-    // PEMINJAM - TAMPILKAN LIST
     Route::get('/peminjam', [PeminjamController::class, 'index'])
     ->name('peminjam.index');
     Route::get('/peminjam/create', [PeminjamController::class, 'create'])
     ->name('peminjam.create');
-
-    // SIMPAN PEMINJAM BARU
     Route::post('/peminjam', [PeminjamController::class, 'store'])
     ->name('peminjam.store');
-
-    // DETAIL PEMINJAM
     Route::get('/peminjam/{id}', [PeminjamController::class, 'show'])
     ->name('peminjam.show');
-
-    // EDIT PEMINJAM
     Route::get('/peminjam/{id}/edit', [PeminjamController::class, 'edit'])
     ->name('peminjam.edit');
-
-    // UPDATE PEMINJAM
     Route::put('/peminjam/{id}', [PeminjamController::class, 'update'])
     ->name('peminjam.update');
-
-    // HAPUS PEMINJAM
     Route::delete('/peminjam/{id}', [PeminjamController::class, 'destroy'])
     ->name('peminjam.destroy');
 
-
-    // Route::get('/users', function () {
-    //     return 'Users list';
-    // })->name('users.index');
-    // Route::get('/peminjaman', function () {
-    //    return view('peminjaman.index');
-    // })->name('peminjaman.index');
-    Route::get('/users/create', function () {
-         return 'Add user form';
-    })->name('users.create');
     Route::get('/reports', function () {
         return 'Reports page';
     })->name('reports.index');

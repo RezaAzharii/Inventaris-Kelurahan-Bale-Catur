@@ -1,7 +1,10 @@
-<div class="fixed top-0 left-0 h-screen w-64 bg-gray-900 text-white p-4 flex flex-col transition-transform duration-300"
+<div class="fixed top-0 left-0 h-screen w-64 bg-gray-900 text-white p-4 flex flex-col z-20 transition-transform duration-300"
     :class="sidebarOpen ? 'translate-x-0' : '-translate-x-64'">
 
-    <h4 class="text-center text-xl font-bold mb-6 tracking-wide">LOGO</h4>
+    <div class="text-center mb-6">
+
+        <img class="h-[104px] w-[106px] mx-auto block" src="images/logo-kel.jpg" alt="Logo Kelurahan">
+    </div>
 
     <ul class="space-y-1">
         @foreach ($menuItems as $item)
@@ -13,7 +16,6 @@
                         ->contains(fn($r) => request()->routeIs($r));
             @endphp
 
-            {{-- Menu dengan Submenu --}}
             @if (!empty($item['children']))
                 <li>
                     <button

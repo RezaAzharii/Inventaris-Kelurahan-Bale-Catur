@@ -1,7 +1,9 @@
 <nav class="bg-gray-900 text-white sticky top-0 w-full z-50 shadow-md" x-data="{ open: false }">
-    <div class="flex items-center justify-between px-6 py-3">
+    <div class="flex items-center justify-between px-3 py-3">
         <div class="flex items-center space-x-3">
-            <button @click="sidebarOpen = !sidebarOpen" class="text-gray-300 hover:text-white focus:outline-none">
+            <button 
+                @click="sidebarOpen = !sidebarOpen" 
+                class="text-gray-300 hover:text-white focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -11,7 +13,7 @@
             <span class="font-semibold text-lg">Inventaris Kelurahan Balecatur</span>
         </div>
 
-        <div class="relative" x-data="{ userMenu: false }">
+        <div class="relative mr-6" x-data="{ userMenu: false }">
             <button @click="userMenu = !userMenu"
                 class="flex items-center space-x-2 focus:outline-none hover:text-gray-300">
                 <span>{{ auth()->user()->name ?? 'User' }}</span>
