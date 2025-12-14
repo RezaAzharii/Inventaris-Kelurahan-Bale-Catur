@@ -6,9 +6,21 @@ use App\Models\Peminjaman;
 use App\Models\Peminjam;
 use App\Models\Aset;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Exports\PeminjamanExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PeminjamanController extends Controller
 {
+    public function export(Request $request)
+    {
+        return Excel::download(
+            new PeminjamanExport($request->search),
+            'data-peminjaman.xlsx'
+        );
+    }
+
+
     public function index(Request $request)
     {
         $query = Peminjaman::with(['peminjam', 'aset']);
@@ -48,16 +60,34 @@ class PeminjamanController extends Controller
 
     public function store(Request $request)
     {
-        Peminjaman::create($request->only([
-            'id_peminjam',
-            'id_aset',
-            'tanggal_pinjam',
-            'tanggal_kembali',
-            'status',
-            'jumlah'
-        ]));
+        DB::transaction(function () use ($request) {
 
-        return redirect()->route('peminjaman.index')->with('success', 'Data peminjaman berhasil ditambahkan.');
+            $aset = Aset::lockForUpdate()->findOrFail($request->id_aset);
+
+            $dipinjam = Peminjaman::where('id_aset', $aset->id_aset)
+                ->where('status', 'Dipinjam')
+                ->sum('jumlah');
+
+            $tersedia = $aset->jumlah - $dipinjam;
+
+            if ($tersedia <= 0) {
+                abort(400, 'Aset tidak tersedia');
+            }
+
+            $jumlah = min((int) $request->jumlah, $tersedia);
+
+            Peminjaman::create([
+                'id_peminjam' => $request->id_peminjam,
+                'id_aset' => $request->id_aset,
+                'tanggal_pinjam' => $request->tanggal_pinjam,
+                'tanggal_kembali' => $request->tanggal_kembali,
+                'status' => $request->status,
+                'jumlah' => $jumlah,
+            ]);
+        });
+
+        return redirect()->route('peminjaman.index')
+            ->with('success', 'Data peminjaman berhasil ditambahkan.');
     }
 
     public function show($id)
@@ -77,11 +107,33 @@ class PeminjamanController extends Controller
 
     public function update(Request $request, $id)
     {
-        $peminjaman = Peminjaman::findOrFail($id);
-        $peminjaman->update($request->all());
+        DB::transaction(function () use ($request, $id) {
 
-        return redirect()->route('peminjaman.index')->with('success', 'Data peminjaman berhasil diperbarui.');
+            $peminjaman = Peminjaman::findOrFail($id);
+            $aset = Aset::findOrFail($peminjaman->id_aset);
+
+            // Total dipinjam selain data ini
+            $dipinjamLain = Peminjaman::where('id_aset', $aset->id_aset)
+                ->where('status', 'Dipinjam')
+                ->where('id_peminjaman', '!=', $peminjaman->id_peminjaman)
+                ->sum('jumlah');
+
+            $tersedia = $aset->jumlah - $dipinjamLain;
+
+            $jumlahBaru = min((int) $request->jumlah, $tersedia);
+
+            $peminjaman->update([
+                'tanggal_kembali' => $request->tanggal_kembali,
+                'status'          => $request->status,
+                'jumlah'          => $jumlahBaru,
+            ]);
+        });
+
+        return redirect()
+            ->route('peminjaman.index')
+            ->with('success', 'Data peminjaman berhasil diperbarui.');
     }
+
 
     public function destroy($id)
     {

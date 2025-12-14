@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Peminjam;
+use App\Exports\PeminjamExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PeminjamController extends Controller
 {
+    public function export()
+    {
+        return Excel::download(
+            new PeminjamExport,
+            'data-peminjam.xlsx'
+        );
+    }
+
     public function index(Request $request)
     {
         $query = Peminjam::query();

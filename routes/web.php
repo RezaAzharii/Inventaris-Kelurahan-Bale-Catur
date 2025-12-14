@@ -22,6 +22,13 @@ Route::middleware('auth')->group(function () {
     //Profile User
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    //export excel
+    Route::get('/peminjaman/export', [PeminjamanController::class, 'export'])
+     ->name('peminjaman.export');
+    Route::get('/peminjam/export', [PeminjamController::class, 'export'])
+    ->name('peminjam.export');
+
     
     //ASET
     Route::get('/aset', [AsetController::class, 'index'])->name('aset.index');
