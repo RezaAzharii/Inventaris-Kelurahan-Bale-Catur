@@ -1,28 +1,10 @@
-{{-- <!DOCTYPE html>
-<html lang="id">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inventaris Aset</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
-
-<body>
-    @include('layouts.navbar')
-
-    @yield('content')
-</body>
-
-</html> --}}
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="{{ asset('images/logo-kel.ico') }}">
     <title>@yield('title', 'Inventaris Aset')</title>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -36,7 +18,7 @@
 
         @include('partials.navbar')
 
-        <main class="p-6">
+        <main class="px-4">
             @yield('content')
         </main>
 

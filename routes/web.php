@@ -14,22 +14,31 @@ Route::get('/', function () {
 
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/aset/{id_aset}', [AsetController::class, 'show'])->name('aset.show');
 
+Route::get('/password/reset', [AuthController::class, 'forgotPasswordForm'])->name('auth.passwords.email');
+Route::post('/password/email', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('/password/reset/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password/reset', [AuthController::class, 'resetPassword'])->name('password.update');
+
 Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     //Profile User
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     //export excel
     Route::get('/peminjaman/export', [PeminjamanController::class, 'export'])
-     ->name('peminjaman.export');
+        ->name('peminjaman.export');
     Route::get('/peminjam/export', [PeminjamController::class, 'export'])
-    ->name('peminjam.export');
+        ->name('peminjam.export');
 
-    
+
+    Route::get('/profile/change-password', [AuthController::class, 'changePasswordForm'])->name('password.change');
+    Route::post('/profile/change-password', [AuthController::class, 'updatePassword'])->name('password.update.profile');
+
     //ASET
     Route::get('/aset', [AsetController::class, 'index'])->name('aset.index');
     Route::post('/aset', [AsetController::class, 'store'])->name('aset.store');
@@ -50,24 +59,20 @@ Route::middleware('auth')->group(function () {
         ->name('peminjaman.update');
     Route::delete('/peminjaman/{id}', [PeminjamanController::class, 'destroy'])
         ->name('peminjaman.destroy');
-    
+
     // Peminjam
     Route::get('/peminjam', [PeminjamController::class, 'index'])
-    ->name('peminjam.index');
+        ->name('peminjam.index');
     Route::get('/peminjam/create', [PeminjamController::class, 'create'])
-    ->name('peminjam.create');
+        ->name('peminjam.create');
     Route::post('/peminjam', [PeminjamController::class, 'store'])
-    ->name('peminjam.store');
+        ->name('peminjam.store');
     Route::get('/peminjam/{id}', [PeminjamController::class, 'show'])
-    ->name('peminjam.show');
+        ->name('peminjam.show');
     Route::get('/peminjam/{id}/edit', [PeminjamController::class, 'edit'])
-    ->name('peminjam.edit');
+        ->name('peminjam.edit');
     Route::put('/peminjam/{id}', [PeminjamController::class, 'update'])
-    ->name('peminjam.update');
+        ->name('peminjam.update');
     Route::delete('/peminjam/{id}', [PeminjamController::class, 'destroy'])
-    ->name('peminjam.destroy');
-
-    Route::get('/reports', function () {
-        return 'Reports page';
-    })->name('reports.index');
+        ->name('peminjam.destroy');
 });

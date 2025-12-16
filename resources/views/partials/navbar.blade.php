@@ -1,4 +1,4 @@
-<nav class="bg-gray-900 text-white sticky top-0 w-full z-50 shadow-md" x-data="{ open: false }">
+<nav class="bg-[#1E293B] text-white sticky top-0 w-full z-50 shadow-md" x-data="{ open: false }">
     <div class="flex items-center justify-between px-3 py-3">
         <div class="flex items-center space-x-3">
             <button 

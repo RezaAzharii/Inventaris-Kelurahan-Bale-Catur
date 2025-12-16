@@ -45,7 +45,7 @@
             @keydown.escape.window="open = false"
         >
 
-            <div class="bg-blue-600 px-6 py-4 flex justify-between items-center">
+            <div class="bg-[#1E293B] px-6 py-4 flex justify-between items-center">
                 <h3 class="text-xl font-bold text-white" id="modal-title">{{ $title }}</h3>
 
                 <button 

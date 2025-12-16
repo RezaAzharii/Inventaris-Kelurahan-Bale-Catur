@@ -1,7 +1,7 @@
 @extends('layouts.app')
-
+@section('title', 'Invenataris Aset - Daftar Aset')
 @section('content')
-    <div class="container mx-auto px-4 py-6">
+    <div class="container mx-auto px-4 pt-3">
 
         <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
             <h1 class="text-2xl font-semibold text-gray-700">
@@ -15,7 +15,7 @@
             @endif
         </div>
 
-        <div class="flex flex-col md:flex-row gap-2 items-center mb-6 w-full">
+        <div class="flex flex-col md:flex-row gap-2 items-center mb-3 w-full">
             <form action="{{ route('aset.index') }}" method="GET" class="relative flex-1">
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
@@ -28,7 +28,7 @@
 
                     <input type="text" name="search" value="{{ request('search') }}"
                         placeholder="Cari aset (kode, jenis, identitas)..."
-                        class="w-full border border-gray-300 rounded-md pl-10 pr-10 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
+                        class="w-full bg-white border border-gray-300 rounded-md pl-10 pr-10 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-[#334155]">
                     @if (request('search'))
                         <a href="{{ route('aset.index') }}"
                             class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
@@ -42,11 +42,16 @@
                 </div>
             </form>
 
-            <button 
-                @click="$dispatch('open-modal', { id: 'tambahAsetModal' })"
+            <button @click="$dispatch('open-modal', { id: 'tambahAsetModal' })"
                 class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-medium shadow-sm transition">
                 Tambah Aset
             </button>
+
+            <a href="#"
+            class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700
+                    text-sm font-medium shadow-sm transition">
+                Export Aset
+            </a>
         </div>
 
         <div class="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
@@ -54,45 +59,38 @@
                 <table class="min-w-full divide-y divide-gray-200 text-sm">
                     <thead class="bg-blue-100 text-gray-700">
                         <tr>
-                            <th class="px-6 py-3 text-left font-semibold">No</th>
-                            <th class="px-6 py-3 text-left font-semibold">Jenis Barang</th>
-                            <th class="px-6 py-3 text-left font-semibold">Kode</th>
-                            <th class="px-6 py-3 text-left font-semibold">Identitas</th>
-                            <th class="px-6 py-3 text-left font-semibold">Pengguna</th>
-                            <th class="px-6 py-3 text-left font-semibold">Tahun</th>
-                            <th class="px-6 py-3 text-left font-semibold">Nilai Perolehan</th>
-                            <th class="px-6 py-3 text-left font-semibold">Nilai Saat Ini</th>
-                            <th class="px-6 py-3 text-left font-semibold">Jumlah</th>
-                            <th class="px-6 py-3 text-left font-semibold">Keterangan</th>
-                            <th class="px-6 py-3 text-center font-semibold">Aksi</th>
+                            <th class="px-4 py-3 text-left font-semibold">No</th>
+                            <th class="px-2 py-3 w-[100px] text-left font-semibold">Jenis Barang</th>
+                            <th class="px-4 py-3 text-center font-semibold">Identitas</th>
+                            <th class="px-2 py-3 text-center font-semibold">Kode</th>
+                            <th class="px-4 py-3 text-center font-semibold">Pengguna</th>
+                            <th class="px-4 py-3 text-center font-semibold">Tahun</th>
+                            <th class="px-4 py-3 text-center font-semibold">Nilai Saat Ini</th>
+                            <th class="px-4 py-3 text-left font-semibold">Jumlah</th>
+                            <th class="px-2 py-3 text-center font-semibold">Aksi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @forelse ($asets as $index => $aset)
                             <tr class="hover:bg-blue-50 transition-colors cursor-pointer"
                                 onclick="window.location='{{ route('aset.show', $aset->id_aset) }}'">
-                                <td class="px-6 py-3">{{ $index + 1 }}</td>
-                                <td class="px-6 py-3 font-medium text-gray-800">{{ $aset->jenis_barang }}</td>
-                                <td class="px-6 py-3 text-gray-600">{{ $aset->kode_barang }}</td>
-                                <td class="px-6 py-3 text-gray-600">{{ $aset->identitas_barang }}</td>
-                                <td class="px-6 py-3 text-gray-600">{{ $aset->pengguna_barang }}</td>
-                                <td class="px-6 py-3 text-gray-600">{{ $aset->tahun_perolehan }}</td>
-                                <td class="px-6 py-3 text-gray-600">
-                                    Rp{{ number_format($aset->nilai_perolehan, 0, ',', '.') }}
+                                <td class="px-4 py-3 text-center">{{ $asets->firstItem() + $loop->index }}</td>
+                                <td class="px-2 py-3 w-[100px] text-center font-medium text-gray-800">{{ $aset->jenis_barang }}</td>
+                                <td class="px-4 py-3 text-gray-600">{{ $aset->identitas_barang }}</td>
+                                <td class="px-4 py-3 text-center text-gray-600">{{ $aset->kode_barang }}</td>
+                                <td class="px-4 py-3 text-gray-600">{{ $aset->pengguna_barang }}</td>
+                                <td class="px-4 py-3 text-gray-600">{{ \Carbon\Carbon::parse($aset->tahun_perolehan)->translatedFormat('d-m-Y') }}</td>
+                                <td class="px-4 py-3 font-semibold text-gray-700">
+                                    Rp. {{ number_format($aset->nilai_saat_ini, 0, ',', '.') }}
                                 </td>
-                                <td class="px-6 py-3 text-gray-600">
-                                    Rp{{ number_format($aset->nilai_saat_ini, 0, ',', '.') }}
-                                </td>
-                                <td class="px-6 py-3 text-gray-600">{{ $aset->jumlah }}</td>
-                                <td class="px-6 py-3 text-gray-600">{{ $aset->keterangan }}</td>
+                                <td class="px-4 py-3 text-center text-gray-600">{{ $aset->jumlah }}</td>
+                                <td class="px-2 py-3">
+                                    <div class="flex items-center gap-1 justify-center"
+                                        onclick="event.stopPropagation()">
 
-                                <td class="px-6 py-3">
-                                    <div class="flex flex-col items-center gap-2 justify-center" onclick="event.stopPropagation()">
-
-                                        <button 
+                                        <button
                                             @click="$dispatch('open-modal', { id: 'editAsetModal-{{ $aset->id_aset }}' })"
-                                            class="text-blue-600 hover:text-blue-800"
-                                            title="Edit Aset">
+                                            class="text-blue-600 hover:text-blue-800" title="Edit Aset">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                                 stroke-linecap="round" stroke-linejoin="round"
@@ -103,15 +101,9 @@
                                             </svg>
                                         </button>
 
-                                        <x-custom-modal 
-                                            :id="'editAsetModal-' . $aset->id_aset" 
-                                            title="Ubah Aset: {{ $aset->kode_barang }}" 
-                                            :action="route('aset.update', $aset->id_aset)" 
-                                            method="PUT" 
-                                            buttonText="Simpan Perubahan"
-                                            maxWidth="sm:max-w-xl" 
-                                            :is_edit_modal="$errors->any() && (request('id_aset') == $aset->id_aset)"
-                                        >
+                                        <x-custom-modal :id="'editAsetModal-' . $aset->id_aset" title="Ubah Aset: {{ $aset->kode_barang }}"
+                                            :action="route('aset.update', $aset->id_aset)" method="PUT" buttonText="Simpan Perubahan"
+                                            maxWidth="sm:max-w-xl" :is_edit_modal="$errors->any() && request('id_aset') == $aset->id_aset">
                                             @include('aset.components.forms-asset', ['aset' => $aset])
                                         </x-custom-modal>
 
@@ -119,8 +111,7 @@
                                             message="Aset ini akan dihapus secara permanen dan tidak dapat dikembalikan. Lanjutkan?"
                                             confirmText="Hapus" cancelText="Batal">
                                             <x-slot:trigger>
-                                                <a class="text-red-600 hover:text-red-800"
-                                                    title="Hapus Aset">
+                                                <a class="text-red-600 hover:text-red-800" title="Hapus Aset">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                         viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -149,15 +140,19 @@
                 </table>
             </div>
         </div>
-        <x-custom-modal
-            id="tambahAsetModal"
-            title="Tambah Aset Baru"
-            :action="route('aset.store')"
-            method="POST"
-            buttonText="Simpan Aset"
-            maxWidth="sm:max-w-xl"
-            :is_edit_modal="$errors->any() && (request('action') == 'create')"
-        >
+        @if ($asets->lastPage() > 1)
+            <div class="mt-2 flex justify-between items-center text-sm text-gray-700">
+                <div>
+                    Menampilkan {{ $asets->firstItem() }} hingga {{ $asets->lastItem() }} dari {{ $asets->total() }} aset
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    {{ $asets->links() }}
+                </div>
+            </div>
+        @endif
+        <x-custom-modal id="tambahAsetModal" title="Tambah Aset Baru" :action="route('aset.store')" method="POST"
+            buttonText="Simpan Aset" maxWidth="sm:max-w-xl" :is_edit_modal="$errors->any() && request('action') == 'create'">
             @include('aset.components.forms-asset', ['aset' => null])
         </x-custom-modal>
     </div>

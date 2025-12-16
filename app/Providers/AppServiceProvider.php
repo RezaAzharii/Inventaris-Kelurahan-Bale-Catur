@@ -41,12 +41,7 @@ class AppServiceProvider extends ServiceProvider
                     'label' => 'Peminjam',
                     'icon' => 'bi bi-people',
                     'route' => 'peminjam.index',
-                ],
-                [
-                    'label' => 'Reports',
-                    'icon' => 'bi bi-graph-up',
-                    'route' => 'reports.index',
-                ],
+                ]
             ];
 
             $view->with('menuItems', $menuItems);

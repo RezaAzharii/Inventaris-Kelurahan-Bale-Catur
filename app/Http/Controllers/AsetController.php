@@ -18,9 +18,10 @@ class AsetController extends Controller
                     ->orWhere('jenis_barang', 'like', "%{$search}%")
                     ->orWhere('identitas_barang', 'like', "%{$search}%")
                     ->orWhere('pengguna_barang', 'like', "%{$search}%");
-            });
+                });
         }
-        $asets = $query->get();
+        $asets = $query->paginate(10);
+        $asets->appends(['search' => $request->search]);
 
         return view('aset.index', compact('asets'));
     }

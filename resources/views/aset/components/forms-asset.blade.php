@@ -15,6 +15,7 @@
             'tahun_perolehan' => '',
             'nilai_perolehan' => '',
             'nilai_saat_ini' => '',
+            'jumlah' => '',
             'keterangan' => '',
         ];
 
@@ -66,6 +67,16 @@
         @enderror
     </div>
 
+    <div>
+        <label for="jumlah" class="block text-sm font-medium text-gray-700">Jumlah</label>
+        <input type="text" name="jumlah" id="jumlah"
+            value="{{ $getAsetValue('jumlah', $aset->jumlah, $is_create, $aset) }}"
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900 @error('jumlah') border-red-500 @enderror">
+        @error('jumlah')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
+    </div>
+    
     <div>
         <label for="pengguna_barang" class="block text-sm font-medium text-gray-700">Pengguna</label>
         <input type="text" name="pengguna_barang" id="pengguna_barang"
