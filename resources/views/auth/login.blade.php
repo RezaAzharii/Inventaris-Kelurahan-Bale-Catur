@@ -11,7 +11,7 @@
 
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
 
-    <div class="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+    <div class="w-full max-w-md bg-white rounded-lg shadow-2xl p-8">
         {{-- <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Login</h2> --}}
         <div class="text-center mb-6">
             <img class="h-[130px] w-[128px] mx-auto block" src="images/logo-kel.jpg" alt="Logo Kelurahan">

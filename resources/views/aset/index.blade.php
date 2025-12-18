@@ -71,7 +71,7 @@
                     </thead>
                     <tbody class="divide-y divide-gray-100">
                         @forelse ($asets as $index => $aset)
-                            <tr class="hover:bg-blue-50 transition-colors cursor-pointer"
+                            <tr class="hover:bg-gray-100 transition-colors cursor-pointer"
                                 onclick="window.location='{{ route('aset.show', $aset->id_aset) }}'">
                                 <td class="px-4 py-3 text-center">{{ $asets->firstItem() + $loop->index }}</td>
                                 <td class="px-2 py-3 w-[100px] text-center font-medium text-gray-800">{{ $aset->jenis_barang }}</td>
@@ -131,7 +131,7 @@
                         @empty
                             <tr>
                                 <td colspan="9" class="text-center py-6 text-gray-500">
-                                    Tidak ada data aset ditemukan.
+                                    Data aset tidak ditemukan.
                                 </td>
                             </tr>
                         @endforelse

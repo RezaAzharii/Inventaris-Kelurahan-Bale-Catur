@@ -36,6 +36,12 @@ class AsetController extends Controller
         return view('aset.index', compact('asets'));
     }
 
+    public function showPublic( $id)
+    {
+        $aset = Aset::findOrFail($id);
+        return view('aset.show_public', compact('aset'));
+    }
+
     public function create()
     {
         return view('aset.create');

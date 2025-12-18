@@ -14,6 +14,7 @@ Route::get('/', function () {
 
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/aset/public/{id_aset}', [AsetController::class, 'showPublic'])->name('aset.showPublic');
 
 Route::get('/password/reset', [AuthController::class, 'forgotPasswordForm'])->name('auth.passwords.email');
 Route::post('/password/email', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -36,12 +37,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/aset/export', [AsetController::class, 'export'])
         ->name('aset.export');
 
-
     Route::get('/profile/change-password', [AuthController::class, 'changePasswordForm'])->name('password.change');
     Route::post('/profile/change-password', [AuthController::class, 'updatePassword'])->name('password.update.profile');
 
     //ASET
     Route::get('/aset', [AsetController::class, 'index'])->name('aset.index');
+    Route::get('/aset/{id_aset}', [AsetController::class, 'show'])->name('aset.show');
     Route::post('/aset', [AsetController::class, 'store'])->name('aset.store');
     Route::get('/aset/{id_aset}/edit', [AsetController::class, 'edit'])->name('aset.edit');
     Route::put('/aset/{id_aset}', [AsetController::class, 'update'])->name('aset.update');
