@@ -42,6 +42,7 @@ class PeminjamExport implements
         return [
             $p->nik,
             $p->nama_peminjam,
+            $p->no_telp,           // Tambahkan kolom no_telp
             $p->peminjamans_count,
         ];
     }
@@ -54,6 +55,7 @@ class PeminjamExport implements
         return [
             'NIK',
             'Nama Peminjam',
+            'No. Telepon',          // Tambahkan heading
             'Jumlah Peminjaman',
         ];
     }
@@ -71,13 +73,13 @@ class PeminjamExport implements
             BeforeSheet::class => function (BeforeSheet $event) {
 
                 $event->sheet->setCellValue('A1', 'DATA PEMINJAM ASET');
-                $event->sheet->mergeCells('A1:C1');
+                $event->sheet->mergeCells('A1:D1'); // Ubah menjadi D1 karena ada 4 kolom
 
                 $event->sheet->setCellValue(
                     'A2',
                     'Diekspor pada: ' . now()->translatedFormat('d F Y')
                 );
-                $event->sheet->mergeCells('A2:C2');
+                $event->sheet->mergeCells('A2:D2'); // Ubah menjadi D2
 
                 $event->sheet->getStyle('A1')->applyFromArray([
                     'font' => [
@@ -112,7 +114,7 @@ class PeminjamExport implements
                 $lastRow = $sheet->getHighestRow();
 
                 // Border tabel
-                $sheet->getStyle("A3:C{$lastRow}")->applyFromArray([
+                $sheet->getStyle("A3:D{$lastRow}")->applyFromArray([
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => Border::BORDER_THIN,
@@ -121,7 +123,7 @@ class PeminjamExport implements
                 ]);
 
                 // Heading bold
-                $sheet->getStyle('A3:C3')->applyFromArray([
+                $sheet->getStyle('A3:D3')->applyFromArray([
                     'font' => ['bold' => true],
                 ]);
 
@@ -130,11 +132,11 @@ class PeminjamExport implements
                 // =============================
                 $totalRow = $lastRow + 1;
 
-                $sheet->mergeCells("A{$totalRow}:B{$totalRow}");
+                $sheet->mergeCells("A{$totalRow}:C{$totalRow}");
                 $sheet->setCellValue("A{$totalRow}", 'TOTAL SELURUH PEMINJAMAN');
-                $sheet->setCellValue("C{$totalRow}", $this->totalPeminjaman);
+                $sheet->setCellValue("D{$totalRow}", $this->totalPeminjaman);
 
-                $sheet->getStyle("A{$totalRow}:C{$totalRow}")->applyFromArray([
+                $sheet->getStyle("A{$totalRow}:D{$totalRow}")->applyFromArray([
                     'font' => ['bold' => true],
                     'borders' => [
                         'allBorders' => [

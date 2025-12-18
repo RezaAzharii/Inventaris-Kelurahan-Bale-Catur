@@ -27,7 +27,7 @@ class AsetController extends Controller
                 $q->where('kode_barang', 'like', "%{$search}%")
                     ->orWhere('jenis_barang', 'like', "%{$search}%")
                     ->orWhere('identitas_barang', 'like', "%{$search}%")
-                    ->orWhere('pengguna_barang', 'like', "%{$search}%");
+                    ->orWhere('pengelola_barang', 'like', "%{$search}%");
                 });
         }
         $asets = $query->paginate(10);
@@ -53,7 +53,7 @@ class AsetController extends Controller
             'jenis_barang',
             'kode_barang',
             'identitas_barang',
-            'pengguna_barang',
+            'pengelola_barang',
             'tahun_perolehan',
             'nilai_perolehan',
             'nilai_saat_ini',

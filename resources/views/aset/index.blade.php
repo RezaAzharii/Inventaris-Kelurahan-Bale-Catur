@@ -62,7 +62,7 @@
                             <th class="px-2 py-3 w-[100px] text-left font-semibold">Jenis Barang</th>
                             <th class="px-4 py-3 text-center font-semibold">Identitas</th>
                             <th class="px-2 py-3 text-center font-semibold">Kode</th>
-                            <th class="px-4 py-3 text-center font-semibold">Pengguna</th>
+                            <th class="px-4 py-3 text-center font-semibold">Pengelola</th>
                             <th class="px-4 py-3 text-center font-semibold">Tahun</th>
                             <th class="px-4 py-3 text-center font-semibold">Nilai Saat Ini</th>
                             <th class="px-4 py-3 text-left font-semibold">Jumlah</th>
@@ -77,7 +77,7 @@
                                 <td class="px-2 py-3 w-[100px] text-center font-medium text-gray-800">{{ $aset->jenis_barang }}</td>
                                 <td class="px-4 py-3 text-gray-600">{{ $aset->identitas_barang }}</td>
                                 <td class="px-4 py-3 text-center text-gray-600">{{ $aset->kode_barang }}</td>
-                                <td class="px-4 py-3 text-gray-600">{{ $aset->pengguna_barang }}</td>
+                                <td class="px-4 py-3 text-gray-600">{{ $aset->pengelola_barang }}</td>
                                 <td class="px-4 py-3 text-gray-600">{{ \Carbon\Carbon::parse($aset->tahun_perolehan)->translatedFormat('d-m-Y') }}</td>
                                 <td class="px-4 py-3 font-semibold text-gray-700">
                                     Rp. {{ number_format($aset->nilai_saat_ini, 0, ',', '.') }}

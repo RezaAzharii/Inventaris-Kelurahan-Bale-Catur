@@ -66,13 +66,13 @@ class PeminjamanExport implements
         return [
             $p->peminjam->nama_peminjam ?? '-',
             $p->aset->identitas_barang ?? '-',
-            $p->jumlah,
             $p->tanggal_pinjam
                 ? Carbon::parse($p->tanggal_pinjam)->translatedFormat('d F Y')
                 : '-',
             $p->tanggal_kembali
                 ? Carbon::parse($p->tanggal_kembali)->translatedFormat('d F Y')
                 : '-',
+            $p->jumlah,
             ucfirst($p->status),
         ];
     }
@@ -85,9 +85,9 @@ class PeminjamanExport implements
         return [
             'Nama Peminjam',
             'Jenis Barang',
-            'Jumlah',
             'Tanggal Pinjam',
             'Tanggal Kembali',
+            'Jumlah',
             'Status',
         ];
     }
@@ -166,9 +166,9 @@ class PeminjamanExport implements
                 // =============================
                 $totalRow = $lastRow + 1;
 
-                $sheet->mergeCells("A{$totalRow}:B{$totalRow}");
+                $sheet->mergeCells("A{$totalRow}:D{$totalRow}");
                 $sheet->setCellValue("A{$totalRow}", 'TOTAL JUMLAH DIPINJAM');
-                $sheet->setCellValue("C{$totalRow}", $this->totalJumlah);
+                $sheet->setCellValue("E{$totalRow}", $this->totalJumlah);
 
                 $sheet->getStyle("A{$totalRow}:F{$totalRow}")->applyFromArray([
                     'font' => ['bold' => true],
@@ -184,7 +184,7 @@ class PeminjamanExport implements
                 // =============================
                 $row = $totalRow + 2;
 
-                $sheet->mergeCells("A{$row}:F{$row}");
+                $sheet->mergeCells("A{$row}:D{$row}");
                 $sheet->setCellValue("A{$row}", 'TOTAL PEMINJAMAN PER JENIS BARANG');
 
                 $sheet->getStyle("A{$row}:F{$row}")->applyFromArray([
@@ -199,9 +199,9 @@ class PeminjamanExport implements
                 $row++;
 
                 foreach ($this->totalPerJenis as $jenis => $total) {
-                    $sheet->mergeCells("A{$row}:B{$row}");
+                    $sheet->mergeCells("A{$row}:D{$row}");
                     $sheet->setCellValue("A{$row}", $jenis);
-                    $sheet->setCellValue("C{$row}", $total);
+                    $sheet->setCellValue("E{$row}", $total);
 
                     $sheet->getStyle("A{$row}:F{$row}")->applyFromArray([
                         'borders' => [

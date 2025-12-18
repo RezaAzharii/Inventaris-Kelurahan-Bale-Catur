@@ -34,7 +34,7 @@
                 
                 <div class="flex flex-col text-sm border-t border-gray-50 pt-2">
                     <span class="text-gray-400 font-medium">Penanggung Jawab</span>
-                    <span class="text-gray-800 font-semibold text-left">{{ $aset->pengguna_barang }}</span>
+                    <span class="text-gray-800 font-semibold text-left">{{ $aset->pengelola_barang }}</span>
                 </div>
 
                 <div class="flex flex-col text-sm border-t border-gray-50 pt-2">

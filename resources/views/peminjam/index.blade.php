@@ -31,7 +31,7 @@
                     </span>
 
                     <input type="text" name="search" value="{{ request('search') }}"
-                        placeholder="Cari peminjam (NIK atau nama)..."
+                        placeholder="Cari peminjam (NIK, nama, atau no. telp)..."
                         class="w-full border border-gray-300 rounded-md pl-10 pr-10 py-2 text-sm
                                focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500">
 
@@ -48,7 +48,7 @@
                 </div>
             </form>
 
-            <!-- Tombol Tambah (gunakan modal seperti aset jika kamu punya komponen modalnya) -->
+            <!-- Tombol Tambah -->
             <button
                 @click="$dispatch('open-modal', { id: 'tambahPeminjamModal' })"
                 class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm font-medium shadow-sm transition">
@@ -72,6 +72,7 @@
                             <th class="px-6 py-3 text-center font-semibold">ID</th>
                             <th class="px-6 py-3 text-center font-semibold">NIK</th>
                             <th class="px-6 py-3 text-center font-semibold">Nama Peminjam</th>
+                            <th class="px-6 py-3 text-center font-semibold">No. Telepon</th> <!-- ditambahkan -->
                             <th class="px-6 py-3 text-center font-semibold">Aksi</th>
                         </tr>
                     </thead>
@@ -84,10 +85,10 @@
                                 <td class="px-6 py-3 text-center">{{ $pm->id_peminjam }}</td>
                                 <td class="px-6 py-3 text-center">{{ $pm->nik }}</td>
                                 <td class="px-6 py-3 text-center">{{ $pm->nama_peminjam }}</td>
+                                <td class="px-6 py-3 text-center">{{ $pm->no_telp }}</td> <!-- ditambahkan -->
 
                                 <td class="px-6 py-3">
                                     <div class="flex flex-row items-center gap-2 justify-center" onclick="event.stopPropagation()">
-
                                         {{-- Tombol Edit --}}
                                         <button 
                                             @click="$dispatch('open-modal', { id: 'editPeminjamModal-{{ $pm->id_peminjam }}' })"
@@ -146,7 +147,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="text-center py-6 text-gray-500">
+                                <td colspan="5" class="text-center py-6 text-gray-500">
                                     Tidak ada peminjam ditemukan.
                                 </td>
                             </tr>

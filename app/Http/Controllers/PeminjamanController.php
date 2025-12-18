@@ -138,8 +138,18 @@ class PeminjamanController extends Controller
     public function destroy($id)
     {
         $peminjaman = Peminjaman::findOrFail($id);
+
+        // ⛔ CEGAH hapus jika belum dikembalikan
+        if (strtolower($peminjaman->status) !== 'dikembalikan') {
+            return redirect()
+                ->route('peminjaman.index')
+                ->with('error', 'Peminjaman belum dikembalikan, tidak dapat dihapus.');
+        }
+
         $peminjaman->delete();
 
-        return redirect()->route('peminjaman.index')->with('success', 'Data peminjaman berhasil dihapus.');
+        return redirect()
+            ->route('peminjaman.index')
+            ->with('success', 'Data peminjaman berhasil dihapus.');
     }
 }

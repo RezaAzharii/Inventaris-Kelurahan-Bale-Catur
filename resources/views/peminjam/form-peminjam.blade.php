@@ -8,6 +8,7 @@
     $peminjam = $peminjam ?? (object) [
         'nik' => '',
         'nama_peminjam' => '',
+        'no_telp' => '', 
     ];
 
     $getPeminjamValue = function ($fieldName, $peminjamValue, $isCreate, $currentPeminjam) {
@@ -58,6 +59,19 @@
                    focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900
                    @error('nama_peminjam') border-red-500 @enderror">
         @error('nama_peminjam')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
+    </div>
+
+    {{-- NOMOR TELEPON --}}
+    <div>
+        <label for="no_telp" class="block text-sm font-medium text-gray-700">No. Telepon</label>
+        <input type="text" name="no_telp" id="no_telp" required
+            value="{{ $getPeminjamValue('no_telp', $peminjam->no_telp, $is_create, $peminjam) }}"
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm 
+                   focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900
+                   @error('no_telp') border-red-500 @enderror">
+        @error('no_telp')
             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
         @enderror
     </div>

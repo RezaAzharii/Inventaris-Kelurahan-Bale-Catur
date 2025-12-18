@@ -15,12 +15,15 @@
     $is_create = is_null($peminjaman->id_peminjaman);
 @endphp
 
-<div class="flex flex-col gap-4">
+<div class="space-y-4">
 
     <!-- PEMINJAM -->
     <div>
-        <label class="block text-sm font-medium mb-1">Peminjam</label>
-        <select name="id_peminjam" required class="w-full border rounded px-3 py-2">
+        <label class="block text-sm font-medium text-gray-700">Peminjam</label>
+        <select name="id_peminjam" required
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm
+                   focus:border-blue-500 focus:ring-blue-500 transition duration-150
+                   p-2.5 text-gray-900 @error('id_peminjam') border-red-500 @enderror" required>
             <option value="">-- Pilih Peminjam --</option>
             @foreach ($peminjam as $p)
                 <option value="{{ $p->id_peminjam }}"
@@ -29,12 +32,18 @@
                 </option>
             @endforeach
         </select>
+        @error('id_peminjam')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
     </div>
 
     <!-- ASET -->
     <div>
-        <label class="block text-sm font-medium mb-1">Aset</label>
-        <select name="id_aset" class="id_aset w-full border rounded px-3 py-2">
+        <label class="block text-sm font-medium text-gray-700">Aset</label>
+        <select name="id_aset"
+            class="id_aset mt-1 block w-full rounded-lg border-gray-300 shadow-sm
+                   focus:border-blue-500 focus:ring-blue-500 transition duration-150
+                   p-2.5 text-gray-900 @error('id_aset') border-red-500 @enderror" required>
             <option value="">-- Pilih Aset --</option>
 
             @foreach ($asets as $aset)
@@ -58,56 +67,86 @@
                 </option>
             @endforeach
         </select>
+        @error('id_aset')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
     </div>
 
     <!-- JUMLAH -->
     <div>
-        <label class="block text-sm font-medium mb-1">Jumlah</label>
+        <label class="block text-sm font-medium text-gray-700">Jumlah</label>
         <input type="number"
-        name="jumlah"
-        class="jumlah w-full border rounded px-3 py-2"
-        min="1"
-        inputmode="numeric"
-        value="{{ $peminjaman->jumlah }}"
-        required>
-
+            name="jumlah"
+            min="1"
+            inputmode="numeric"
+            value="{{ $peminjaman->jumlah }}"
+            required
+            class="jumlah mt-1 block w-full rounded-lg border-gray-300 shadow-sm
+                   focus:border-blue-500 focus:ring-blue-500 transition duration-150
+                   p-2.5 text-gray-900 @error('jumlah') border-red-500 @enderror" required>
+        @error('jumlah')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
     </div>
 
-    <!-- TANGGAL -->
+    <!-- TANGGAL PINJAM -->
     <div>
-        <label class="block text-sm font-medium mb-1">Tanggal Pinjam</label>
+        <label class="block text-sm font-medium text-gray-700">Tanggal Pinjam</label>
         <input type="datetime-local"
             name="tanggal_pinjam"
             value="{{ old('tanggal_pinjam',
-                    $peminjaman->tanggal_pinjam
-                        ? \Carbon\Carbon::parse($peminjaman->tanggal_pinjam)->format('Y-m-d\TH:i')
-                        : ''
+                $peminjaman->tanggal_pinjam
+                    ? \Carbon\Carbon::parse($peminjaman->tanggal_pinjam)->format('Y-m-d\TH:i')
+                    : ''
             ) }}"
-            class="w-full border rounded px-3 py-2"
-            required>
+            required
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm
+                   focus:border-blue-500 focus:ring-blue-500 transition duration-150
+                   p-2.5 text-gray-900 @error('tanggal_pinjam') border-red-500 @enderror" required>
+        @error('tanggal_pinjam')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
     </div>
 
+    <!-- TANGGAL KEMBALI -->
     <div>
-        <label class="block text-sm font-medium mb-1">Tanggal Kembali</label>
+        <label class="block text-sm font-medium text-gray-700">Tanggal Kembali</label>
         <input type="datetime-local"
             name="tanggal_kembali"
             value="{{ old('tanggal_kembali',
-                    $peminjaman->tanggal_kembali
-                        ? \Carbon\Carbon::parse($peminjaman->tanggal_kembali)->format('Y-m-d\TH:i')
-                        : ''
+                $peminjaman->tanggal_kembali
+                    ? \Carbon\Carbon::parse($peminjaman->tanggal_kembali)->format('Y-m-d\TH:i')
+                    : ''
             ) }}"
-            class="w-full border rounded px-3 py-2">
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm
+                   focus:border-blue-500 focus:ring-blue-500 transition duration-150
+                   p-2.5 text-gray-900 @error('tanggal_kembali') border-red-500 @enderror" required>
+        @error('tanggal_kembali')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
     </div>
 
     <!-- STATUS -->
     <div>
-        <label class="block text-sm font-medium mb-1">Status</label>
-        <select name="status" class="w-full border rounded px-3 py-2">
-            <option value="Dipinjam" {{ $peminjaman->status == 'Dipinjam' ? 'selected' : '' }}>Dipinjam</option>
-            <option value="Dikembalikan" {{ $peminjaman->status == 'Dikembalikan' ? 'selected' : '' }}>Dikembalikan</option>
+        <label class="block text-sm font-medium text-gray-700">Status</label>
+        <select name="status"
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm
+                   focus:border-blue-500 focus:ring-blue-500 transition duration-150
+                   p-2.5 text-gray-900 @error('status') border-red-500 @enderror" required>
+            <option value="Dipinjam" {{ $peminjaman->status == 'Dipinjam' ? 'selected' : '' }}>
+                Dipinjam
+            </option>
+            <option value="Dikembalikan" {{ $peminjaman->status == 'Dikembalikan' ? 'selected' : '' }}>
+                Dikembalikan
+            </option>
         </select>
+        @error('status')
+            <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
+        @enderror
     </div>
+
 </div>
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {

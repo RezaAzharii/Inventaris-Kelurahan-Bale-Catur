@@ -24,6 +24,8 @@
 
     </div>
 
+    @stack('scripts')
+
 </body>
 
 

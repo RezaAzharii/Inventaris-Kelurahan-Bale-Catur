@@ -51,8 +51,8 @@
 
                             <div class="space-y-4">
                                 <div>
-                                    <label class="text-xs font-bold text-gray-400 uppercase tracking-wider">Pengguna Barang</label>
-                                    <p class="mt-1 text-gray-800 font-medium">{{ $aset->pengguna_barang }}</p>
+                                    <label class="text-xs font-bold text-gray-400 uppercase tracking-wider">pengelola Barang</label>
+                                    <p class="mt-1 text-gray-800 font-medium">{{ $aset->pengelola_barang }}</p>
                                 </div>
                                 <div>
                                     <label class="text-xs font-bold text-gray-400 uppercase tracking-wider">Nilai Perolehan</label>

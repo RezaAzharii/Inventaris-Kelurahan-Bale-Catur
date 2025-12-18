@@ -14,6 +14,7 @@ class Peminjam extends Model
     protected $fillable = [
         'nik',
         'nama_peminjam',
+        'no_telp',
     ];
 
     public function peminjamans(){

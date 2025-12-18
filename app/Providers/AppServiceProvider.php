@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
                     'route' => 'aset.index',
                 ],
                 [
-                    'label' => 'Peminjaman',
+                    'label' => 'Data Peminjaman Aset',
                     'icon' => 'bi bi-archive',
                     'route' => 'peminjaman.index',
                 ],

@@ -27,7 +27,8 @@ class PeminjamController extends Controller
             $query->where(function ($q) use ($search) {
                 $q->where('id_peminjam', 'like', "%{$search}%")
                   ->orWhere('nik', 'like', "%{$search}%")
-                  ->orWhere('nama_peminjam', 'like', "%{$search}%");
+                  ->orWhere('nama_peminjam', 'like', "%{$search}%")
+                  ->orWhere('no_telp', 'like', "%{$search}%");
             });
         }
 
@@ -46,6 +47,7 @@ class PeminjamController extends Controller
         $request->validate([
             'nik' => 'required',
             'nama_peminjam' => 'required',
+            'no_telp' => 'nullable|string|max:20',
         ]);
 
         Peminjam::create($request->all());
@@ -72,6 +74,7 @@ class PeminjamController extends Controller
         $request->validate([
             'nik' => 'required',
             'nama_peminjam' => 'required',
+            'no_telp' => 'nullable|string|max:20',
         ]);
 
         $peminjam = Peminjam::findOrFail($id);

@@ -15,7 +15,7 @@ class Aset extends Model
         'jenis_barang',
         'kode_barang',
         'identitas_barang',
-        'pengguna_barang',
+        'pengelola_barang',
         'tahun_perolehan',
         'nilai_perolehan',
         'nilai_saat_ini',

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('id_peminjam');
             $table->string('nik', 16)->unique();
             $table->string('nama_peminjam');
+            $table->string('no_telp', 20);
             $table->timestamps();
         });
     }

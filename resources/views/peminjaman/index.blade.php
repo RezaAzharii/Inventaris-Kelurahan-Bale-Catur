@@ -110,7 +110,7 @@
 
                         <!-- Aksi -->
                         <td class="px-6 py-3">
-                            <div class="flex flex-col items-center gap-2" onclick="event.stopPropagation()">
+                            <div class="flex items-center justify-center gap-3" onclick="event.stopPropagation()">
 
                                 <!-- Tombol Edit -->
                                 <button 
@@ -140,28 +140,51 @@
                                 </x-custom-modal>
 
 
-                                <!-- Delete -->
-                                <x-alert-dialog 
-                                    :action="route('peminjaman.destroy', $p->id_peminjaman)"
-                                    title="Hapus Data Peminjaman?"
-                                    message="Data peminjaman ini akan dihapus secara permanen. Lanjutkan?"
-                                    confirmText="Hapus" cancelText="Batal">
+                                @php
+                                    $statusLower = strtolower(trim($p->status));
+                                    $bolehHapus = $statusLower === 'dikembalikan';
+                                @endphp
 
-                                    <x-slot:trigger>
-                                        <a class="text-red-600 hover:text-red-800" title="Hapus Peminjaman">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M10 11v6" />
-                                                <path d="M14 11v6" />
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
-                                                <path d="M3 6h18" />
-                                                <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                                            </svg>
-                                        </a>
-                                    </x-slot:trigger>
+                                @if ($bolehHapus)
+                                    <!-- Delete aktif -->
+                                    <x-alert-dialog 
+                                        :action="route('peminjaman.destroy', $p->id_peminjaman)"
+                                        title="Hapus Data Peminjaman?"
+                                        message="Data peminjaman ini akan dihapus secara permanen. Lanjutkan?"
+                                        confirmText="Hapus" cancelText="Batal">
 
-                                </x-alert-dialog>
+                                        <x-slot:trigger>
+                                            <a class="text-red-600 hover:text-red-800" title="Hapus Peminjaman">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M10 11v6" />
+                                                    <path d="M14 11v6" />
+                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                                                    <path d="M3 6h18" />
+                                                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                                </svg>
+                                            </a>
+                                        </x-slot:trigger>
+
+                                    </x-alert-dialog>
+                                @else
+                                    <!-- Delete non-aktif -->
+                                    <span
+                                        class="text-gray-400 cursor-not-allowed"
+                                        title="Tidak dapat dihapus sebelum aset dikembalikan">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M10 11v6" />
+                                            <path d="M14 11v6" />
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+                                            <path d="M3 6h18" />
+                                            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                                        </svg>
+                                    </span>
+                                @endif
+
 
                             </div>
                         </td>

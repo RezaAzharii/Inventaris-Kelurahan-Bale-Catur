@@ -53,7 +53,7 @@ class AsetExport implements
             $a->jenis_barang,
             $a->kode_barang,
             $a->identitas_barang,
-            $a->pengguna_barang,
+            $a->pengelola_barang,
             $a->tahun_perolehan,
             $a->nilai_perolehan,
             $a->nilai_saat_ini,
@@ -72,7 +72,7 @@ class AsetExport implements
             'Jenis Barang',
             'Kode Barang',
             'Identitas Barang',
-            'Pengguna Barang',
+            'Pengelola Barang',
             'Tahun Perolehan',
             'Nilai Perolehan',
             'Nilai Saat Ini',
@@ -124,7 +124,7 @@ class AsetExport implements
                 $sheet = $event->sheet->getDelegate();
                 $lastRow = $sheet->getHighestRow();
 
-                // Border tabel
+                // Border tabel utama
                 $sheet->getStyle("A3:J{$lastRow}")->applyFromArray([
                     'borders' => [
                         'allBorders' => [
@@ -143,10 +143,12 @@ class AsetExport implements
                 // =============================
                 $totalRow = $lastRow + 1;
 
+                // Merge seluruh kolom, tapi teks di kolom A, total di kolom I
                 $sheet->mergeCells("A{$totalRow}:H{$totalRow}");
                 $sheet->setCellValue("A{$totalRow}", 'TOTAL JUMLAH ASET');
                 $sheet->setCellValue("I{$totalRow}", $this->totalJumlah);
 
+                // Apply border ke seluruh range
                 $sheet->getStyle("A{$totalRow}:J{$totalRow}")->applyFromArray([
                     'font' => ['bold' => true],
                     'borders' => [
@@ -161,6 +163,7 @@ class AsetExport implements
                 // =============================
                 $row = $totalRow + 2;
 
+                // Judul total per jenis
                 $sheet->mergeCells("A{$row}:J{$row}");
                 $sheet->setCellValue("A{$row}", 'TOTAL ASET PER JENIS BARANG');
                 $sheet->getStyle("A{$row}:J{$row}")->applyFromArray([
@@ -178,6 +181,16 @@ class AsetExport implements
                     $sheet->mergeCells("A{$row}:H{$row}");
                     $sheet->setCellValue("A{$row}", $jenis);
                     $sheet->setCellValue("I{$row}", $total);
+
+                    // Border full per baris
+                    $sheet->getStyle("A{$row}:J{$row}")->applyFromArray([
+                        'borders' => [
+                            'allBorders' => [
+                                'borderStyle' => Border::BORDER_THIN,
+                            ],
+                        ],
+                    ]);
+
                     $row++;
                 }
 

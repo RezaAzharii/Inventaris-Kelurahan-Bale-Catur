@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('jenis_barang');
             $table->string('kode_barang');
             $table->string('identitas_barang');
-            $table->string('pengguna_barang');
+            $table->string('pengelola_barang');
             $table->date('tahun_perolehan')->nullable();
             $table->decimal('nilai_perolehan', 15, 2)->nullable();
             $table->decimal('nilai_saat_ini', 15, 2)->nullable();
