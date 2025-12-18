@@ -32,7 +32,7 @@
 
                     <div>
                         <p class="text-sm font-medium text-gray-500">Aset</p>
-                        <p class="mt-1 text-sm text-gray-900">{{ $peminjaman->Aset->jenis_barang ?? '-' }}</p>
+                        <p class="mt-1 text-sm text-gray-900">{{ $peminjaman->Aset->identitas_barang ?? '-' }}</p>
                     </div>
 
                     <div>

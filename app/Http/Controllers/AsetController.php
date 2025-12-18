@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Aset;
 use Illuminate\Http\Request;
+use App\Exports\AsetExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AsetController extends Controller
 {
+    public function export()
+    {
+        return Excel::download(
+            new AsetExport,
+            'data-aset.xlsx'
+        );
+    }
+    
     public function index(Request $request)
     {
         $query = Aset::query();

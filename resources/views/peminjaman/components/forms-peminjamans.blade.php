@@ -7,7 +7,7 @@
         'id_peminjam'     => '',
         'id_aset'         => '',
         'jumlah'          => 1,
-        'tanggal_pinjam'  => date('Y-m-d'),
+        'tanggal_pinjam'  => now(),
         'tanggal_kembali' => '',
         'status'          => 'Dipinjam',
     ];
@@ -54,7 +54,7 @@
                 <option value="{{ $aset->id_aset }}"
                         data-max="{{ $maxInput }}"
                         {{ $peminjaman->id_aset == $aset->id_aset ? 'selected' : '' }}>
-                    {{ $aset->jenis_barang }} (tersedia {{ $maxInput }})
+                    {{ $aset->identitas_barang }} (tersedia {{ $maxInput }})
                 </option>
             @endforeach
         </select>
@@ -76,16 +76,27 @@
     <!-- TANGGAL -->
     <div>
         <label class="block text-sm font-medium mb-1">Tanggal Pinjam</label>
-        <input type="date" name="tanggal_pinjam"
-               value="{{ $peminjaman->tanggal_pinjam }}"
-               class="w-full border rounded px-3 py-2" required>
+        <input type="datetime-local"
+            name="tanggal_pinjam"
+            value="{{ old('tanggal_pinjam',
+                    $peminjaman->tanggal_pinjam
+                        ? \Carbon\Carbon::parse($peminjaman->tanggal_pinjam)->format('Y-m-d\TH:i')
+                        : ''
+            ) }}"
+            class="w-full border rounded px-3 py-2"
+            required>
     </div>
 
     <div>
         <label class="block text-sm font-medium mb-1">Tanggal Kembali</label>
-        <input type="date" name="tanggal_kembali"
-               value="{{ $peminjaman->tanggal_kembali }}"
-               class="w-full border rounded px-3 py-2" required>
+        <input type="datetime-local"
+            name="tanggal_kembali"
+            value="{{ old('tanggal_kembali',
+                    $peminjaman->tanggal_kembali
+                        ? \Carbon\Carbon::parse($peminjaman->tanggal_kembali)->format('Y-m-d\TH:i')
+                        : ''
+            ) }}"
+            class="w-full border rounded px-3 py-2">
     </div>
 
     <!-- STATUS -->
@@ -128,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 jumlahInput.value = max;
 
                 if (!alerted) {
-                    alert('Barang yang dapat dipinjam tersedia ' + max);
+                    alert('⚠️ Jumlah melebihi stok. Maksimal peminjaman ' + max + ' unit.');
                     alerted = true;
                 }
             } else {

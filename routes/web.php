@@ -14,7 +14,6 @@ Route::get('/', function () {
 
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::get('/aset/{id_aset}', [AsetController::class, 'show'])->name('aset.show');
 
 Route::get('/password/reset', [AuthController::class, 'forgotPasswordForm'])->name('auth.passwords.email');
 Route::post('/password/email', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
@@ -34,6 +33,8 @@ Route::middleware('auth')->group(function () {
         ->name('peminjaman.export');
     Route::get('/peminjam/export', [PeminjamController::class, 'export'])
         ->name('peminjam.export');
+    Route::get('/aset/export', [AsetController::class, 'export'])
+        ->name('aset.export');
 
 
     Route::get('/profile/change-password', [AuthController::class, 'changePasswordForm'])->name('password.change');
@@ -45,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/aset/{id_aset}/edit', [AsetController::class, 'edit'])->name('aset.edit');
     Route::put('/aset/{id_aset}', [AsetController::class, 'update'])->name('aset.update');
     Route::delete('/aset/{id_aset}', [AsetController::class, 'destroy'])->name('aset.destroy');
+    Route::get('/aset/{id_aset}', [AsetController::class, 'show'])->name('aset.show');
 
     // Peminjaman
     Route::get('/peminjaman', [PeminjamanController::class, 'index'])

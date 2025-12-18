@@ -36,7 +36,7 @@ class PeminjamanController extends Controller
                         $p->where('nama_peminjam', 'like', "%{$search}%");
                     })
                     ->orWhereHas('aset', function ($a) use ($search) {
-                        $a->where('jenis_barang', 'like', "%{$search}%");
+                        $a->where('identitas_barang', 'like', "%{$search}%");
                     });
             });
         }

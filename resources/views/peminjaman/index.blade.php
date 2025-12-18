@@ -84,7 +84,7 @@
 
                         <td class="px-6 py-3">{{ $index + 1 }}</td>
                         <td class="px-6 py-3 font-medium text-gray-800">{{ $p->peminjam->nama_peminjam ?? '-' }}</td>
-                        <td class="px-6 py-3 text-gray-600">{{ $p->aset->jenis_barang ?? '-' }}</td>
+                        <td class="px-6 py-3 text-gray-600">{{ $p->aset->identitas_barang ?? '-' }}</td>
                         <td class="px-6 py-3 text-gray-600">{{ $p->jumlah }}</td>
                         <td class="px-6 py-3 text-gray-600">{{ $p->tanggal_pinjam }}</td>
                         <td class="px-6 py-3 text-gray-600">{{ $p->tanggal_kembali ?? '-' }}</td>

@@ -21,8 +21,8 @@ class PeminjamanExport implements
     ShouldAutoSize
 {
     protected $search;
-    protected $totalJumlah = 0;
-    protected $totalPerJenis = [];
+    protected int $totalJumlah = 0;
+    protected array $totalPerJenis = [];
 
     public function __construct($search = null)
     {
@@ -41,7 +41,7 @@ class PeminjamanExport implements
                         $q->where('nama_peminjam', 'like', '%' . $this->search . '%')
                     )
                     ->orWhereHas('aset', fn ($q) =>
-                        $q->where('jenis_barang', 'like', '%' . $this->search . '%')
+                        $q->where('identitas_barang', 'like', '%' . $this->search . '%')
                     );
             })
             ->get();
@@ -51,7 +51,7 @@ class PeminjamanExport implements
 
         // Total per jenis barang
         $this->totalPerJenis = $data
-            ->groupBy(fn ($item) => $item->aset->jenis_barang ?? 'Tidak Diketahui')
+            ->groupBy(fn ($item) => $item->aset->identitas_barang ?? 'Tidak Diketahui')
             ->map(fn ($group) => $group->sum('jumlah'))
             ->toArray();
 
@@ -65,7 +65,7 @@ class PeminjamanExport implements
     {
         return [
             $p->peminjam->nama_peminjam ?? '-',
-            $p->aset->jenis_barang ?? '-',
+            $p->aset->identitas_barang ?? '-',
             $p->jumlah,
             $p->tanggal_pinjam
                 ? Carbon::parse($p->tanggal_pinjam)->translatedFormat('d F Y')
@@ -115,7 +115,7 @@ class PeminjamanExport implements
                 }
 
                 $subjudul = 'Filter: ' . ($this->search ?? 'Semua Data')
-                    . ' | Diekspor: ' . now()->translatedFormat('d F Y');
+                    . ' | Diekspor: ' . Carbon::now()->translatedFormat('d F Y');
 
                 $event->sheet->setCellValue('A1', $judul);
                 $event->sheet->mergeCells('A1:F1');
@@ -133,7 +133,7 @@ class PeminjamanExport implements
                     'alignment' => ['horizontal' => 'center'],
                 ]);
 
-                // Geser tabel (heading di baris 3)
+                // Heading tabel di baris 3
                 $event->sheet->insertNewRowBefore(3, 2);
             },
 
@@ -145,7 +145,9 @@ class PeminjamanExport implements
                 $sheet = $event->sheet->getDelegate();
                 $lastRow = $sheet->getHighestRow();
 
-                // Border tabel
+                // =============================
+                // BORDER TABEL UTAMA
+                // =============================
                 $sheet->getStyle("A3:F{$lastRow}")->applyFromArray([
                     'borders' => [
                         'allBorders' => [
@@ -183,9 +185,15 @@ class PeminjamanExport implements
                 $row = $totalRow + 2;
 
                 $sheet->mergeCells("A{$row}:F{$row}");
-                $sheet->setCellValue("A{$row}", 'TOTAL PER JENIS BARANG');
-                $sheet->getStyle("A{$row}")->applyFromArray([
+                $sheet->setCellValue("A{$row}", 'TOTAL PEMINJAMAN PER JENIS BARANG');
+
+                $sheet->getStyle("A{$row}:F{$row}")->applyFromArray([
                     'font' => ['bold' => true],
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => Border::BORDER_THIN,
+                        ],
+                    ],
                 ]);
 
                 $row++;
@@ -194,11 +202,20 @@ class PeminjamanExport implements
                     $sheet->mergeCells("A{$row}:B{$row}");
                     $sheet->setCellValue("A{$row}", $jenis);
                     $sheet->setCellValue("C{$row}", $total);
+
+                    $sheet->getStyle("A{$row}:F{$row}")->applyFromArray([
+                        'borders' => [
+                            'allBorders' => [
+                                'borderStyle' => Border::BORDER_THIN,
+                            ],
+                        ],
+                    ]);
+
                     $row++;
                 }
 
                 // =============================
-                // FOOTER / TTD
+                // FOOTER / TTD (TANPA BORDER)
                 // =============================
                 $row += 2;
 
@@ -217,7 +234,7 @@ class PeminjamanExport implements
                 $sheet->mergeCells("D{$row}:F{$row}");
                 $sheet->setCellValue(
                     "D{$row}",
-                    'Tanggal: ' . now()->translatedFormat('d F Y')
+                    'Tanggal: ' . Carbon::now()->translatedFormat('d F Y')
                 );
             },
         ];
