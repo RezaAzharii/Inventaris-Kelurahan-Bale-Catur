@@ -41,7 +41,9 @@ class PeminjamanController extends Controller
             });
         }
 
-        $peminjaman = $query->get();
+        $peminjaman = $query->paginate(10);
+        $peminjaman->appends(['search' => $request->search]);
+        
         $peminjam = Peminjam::all();
         $asets = Aset::all();
 

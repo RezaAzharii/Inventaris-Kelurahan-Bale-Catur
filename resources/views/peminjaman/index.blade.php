@@ -82,8 +82,9 @@
                     <tr class="hover:bg-blue-50 transition-colors cursor-pointer"
                         onclick="window.location='{{ route('peminjaman.show', $p->id_peminjaman) }}'">
 
-                        <td class="px-6 py-3">{{ $index + 1 }}</td>
-                        <td class="px-6 py-3 font-medium text-gray-800">{{ $p->peminjam->nama_peminjam ?? '-' }}</td>
+                        <td class="px-6 py-3">
+                            {{ $peminjaman->firstItem() + $loop->index }}
+                        </td>                        <td class="px-6 py-3 font-medium text-gray-800">{{ $p->peminjam->nama_peminjam ?? '-' }}</td>
                         <td class="px-6 py-3 text-gray-600">{{ $p->aset->identitas_barang ?? '-' }}</td>
                         <td class="px-6 py-3 text-gray-600">{{ $p->jumlah }}</td>
                         <td class="px-6 py-3 text-gray-600">{{ $p->tanggal_pinjam }}</td>
@@ -201,6 +202,20 @@
             </table>
         </div>
     </div>
+
+    @if ($peminjaman->lastPage() > 1)
+        <div class="mt-4 flex justify-between items-center text-sm text-gray-700">
+            <div>
+                Menampilkan {{ $peminjaman->firstItem() }}
+                hingga {{ $peminjaman->lastItem() }}
+                dari {{ $peminjaman->total() }} peminjaman
+            </div>
+
+            <div>
+                {{ $peminjaman->links() }}
+            </div>
+        </div>
+    @endif
 
     <!-- Modal Tambah -->
     <x-custom-modal
