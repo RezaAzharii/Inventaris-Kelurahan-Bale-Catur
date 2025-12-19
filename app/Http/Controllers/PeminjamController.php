@@ -31,10 +31,8 @@ class PeminjamController extends Controller
                   ->orWhere('no_telp', 'like', "%{$search}%");
             });
         }
-        $peminjams = $query
-        ->orderBy('created_at', 'asc')
-        ->paginate(10)
-        ->withQueryString();
+        $peminjams = $query->paginate(10);
+        $peminjams->appends(['search' => $request->search]);
 
         return view('peminjam.index', compact('peminjams'));
     }
