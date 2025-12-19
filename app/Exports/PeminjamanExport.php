@@ -36,6 +36,17 @@ class PeminjamanExport implements
     {
         $data = Peminjaman::with(['peminjam', 'aset'])
             ->when($this->search, function ($query) {
+
+                // 🔥 JIKA SEARCH FORMAT BULAN (YYYY-MM)
+                if (preg_match('/^\d{4}-\d{2}$/', $this->search)) {
+                    [$year, $month] = explode('-', $this->search);
+
+                    $query->whereYear('tanggal_pinjam', $year)
+                        ->whereMonth('tanggal_pinjam', $month);
+
+                    return;
+                }
+
                 $query->where('status', 'like', '%' . $this->search . '%')
                     ->orWhereHas('peminjam', fn ($q) =>
                         $q->where('nama_peminjam', 'like', '%' . $this->search . '%')

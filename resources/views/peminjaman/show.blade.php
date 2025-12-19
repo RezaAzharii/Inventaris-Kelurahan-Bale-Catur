@@ -105,6 +105,15 @@
 
                                 <div>
                                     <label class="text-xs font-bold text-gray-400 uppercase tracking-wider">
+                                        Keterangan Aset
+                                    </label>
+                                    <div class="mt-2 p-3 bg-gray-100 rounded-lg italic text-gray-600 text-sm">
+                                        "{{ $peminjaman->Aset->keterangan ?? 'Tidak ada keterangan.' }}"
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="text-xs font-bold text-gray-400 uppercase tracking-wider">
                                         Status
                                     </label>
                                     @php $status = strtolower($peminjaman->status); @endphp

@@ -69,9 +69,11 @@
 
     <div>
         <label for="jumlah" class="block text-sm font-medium text-gray-700">Jumlah</label>
-        <input type="text" name="jumlah" id="jumlah"
-            value="{{ $getAsetValue('jumlah', $aset->jumlah, $is_create, $aset) }}"
-            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900 @error('jumlah') border-red-500 @enderror" required>
+        <input type="number" name="jumlah" id="jumlah"
+            min="1"
+            value="{{ $getAsetValue('jumlah', $aset->jumlah ?: 1, $is_create, $aset) }}"
+            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 p-2.5 text-gray-900 @error('jumlah') border-red-500 @enderror"
+            required>
         @error('jumlah')
             <p class="mt-1 text-xs text-red-500">{{ $message }}</p>
         @enderror
