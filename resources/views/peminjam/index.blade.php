@@ -156,7 +156,19 @@
                 </table>
             </div>
         </div>
+        @if ($peminjams->lastPage() > 1)
+            <div class="mt-2 flex justify-between items-center text-sm text-gray-700">
+                <div>
+                    Menampilkan {{ $peminjams->firstItem() }}
+                    hingga {{ $peminjams->lastItem() }}
+                    dari {{ $peminjams->total() }} peminjam
+                </div>
 
+                <div class="flex items-center space-x-2">
+                    {{ $peminjams->links() }}
+                </div>
+            </div>
+        @endif
         <!-- Modal Tambah -->
         <x-custom-modal
             id="tambahPeminjamModal"
