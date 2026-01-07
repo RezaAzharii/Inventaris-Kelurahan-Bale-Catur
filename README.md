@@ -54,7 +54,7 @@ Sistem manajemen inventaris aset kelurahan yang dibangun menggunakan **Laravel 1
    Setelah menjalankan seeder, gunakan akun berikut untuk login:
     - **Email:** Admin@example.com
     - **Password:** rahasia123
-   Sesuaikan pengaturan database pada file .env.
+-  Sesuaikan pengaturan database pada file .env.
 
 5. **Run Project aset frontend**
 
