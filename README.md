@@ -46,9 +46,10 @@ Sistem manajemen inventaris aset kelurahan yang dibangun menggunakan **Laravel 1
     ```
 
 4. **Set-up Database**
-   `bash
- php artisan migrate
- `
+
+   ```bash
+   php artisan migrate
+   ```
    Sesuaikan pengaturan database pada file .env.
 
 5. **Run Project aset frontend**
