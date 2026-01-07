@@ -48,8 +48,12 @@ Sistem manajemen inventaris aset kelurahan yang dibangun menggunakan **Laravel 1
 4. **Set-up Database**
 
    ```bash
-   php artisan migrate
+   php artisan migrate --seed
    ```
+   ## Akun Akses Default
+   Setelah menjalankan seeder, gunakan akun berikut untuk login:
+    - **Email:** Admin@example.com
+    - **Password:** rahasia123
    Sesuaikan pengaturan database pada file .env.
 
 5. **Run Project aset frontend**
